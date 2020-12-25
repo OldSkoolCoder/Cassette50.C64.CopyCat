@@ -293,3 +293,13 @@
 .const CS_DisplayOn                = 3
 .const CS_DisplayOff               = 4
 .const CS_End                      = 5
+
+.const HTS_Start                    = 0
+.const HTS_GetNext                  = 1
+.const HTS_WaitingInput             = 2
+.const HTS_EvaluateAnswer           = 3
+.const HTS_DisplayOn                = 4
+.const HTS_DisplayOff               = 5
+.const HTS_GotItWrong               = 6
+.const HTS_Completed                = 7
+
