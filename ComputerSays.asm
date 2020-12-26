@@ -44,6 +44,13 @@ csComputerSaysStart:
     lda #0
     sta CurrentCombiCount       // Reset the counter
     inc GameLevel               // Increase the difficulty # Of Combos
+    sed
+    clc
+    lda LevelBDC
+    adc #1
+    sta LevelBDC
+    cld
+    jsr DisplayLevel
     lda #CS_GetNext
     sta ComputerSaysFlag        // Goto next CS Stage
     rts
@@ -64,6 +71,8 @@ csComputerSaysGetNext:
 
 // ========================================================================
 csComputerSaysDisplayOn:
+    lda CurrentCombination
+    jsr PlaySound
     inc CurrentDisplayDelay
     lda CurrentDisplayDelay
     cmp LevelDisplayDelay
@@ -77,6 +86,7 @@ csComputerSaysDisplayOn:
     lda #CS_DisplayOff
     sta ComputerSaysFlag        // Goto Next CS Stage
 
+    jsr DeActivateSID
     lda CurrentCombination      // Load Current Combination
     jmp TurnOffCell
     

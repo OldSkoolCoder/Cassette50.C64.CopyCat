@@ -21,6 +21,10 @@
 .label ZeroPageHigh    = $46
 .label ZeroPageLow2    = $47
 .label ZeroPageHigh2   = $48
+
+.label TimerZeroPageLo = $61
+.label TimerZeroPageHi = $62
+
                 // $FF       Reserved for Kernal
 
 //===============================================================================

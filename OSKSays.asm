@@ -11,17 +11,25 @@ start:
     sta VIC_BGCOL0
     sta VIC_EXTCOL
 
-    lda #CHR_White
-    jsr krljmp_CHROUT
-    lda #CHR_ClearScreen
-    jsr krljmp_CHROUT
+    jsr gfClearScreen
 
-    lda #30
+    lda #180
     sta NoOfCombination
+
+    lda #$99
+    sta HiScore
+    sta HiScore + 1
+    sta HiScore + 2
 
 GameLoop:
     jsr gfGameSetUpToStart
+    jsr DisplayLives
+    jsr DisplayHiScore
+
+    jsr gfPressSpaceToStart
+
     jsr gfGetCombinations
+    jsr GetReadyGo
 
 LevellingCycle:
     lda #CS_Start
@@ -33,7 +41,20 @@ LevellingCycle:
     sta HumanTryToSayFlag
     
     jsr htsHumanTrysToSay
-    jmp LevellingCycle
+
+    lda Lives
+    bne LevellingCycle
+
+    jsr gfYouDiedText
+    ldy GameLevel
+    cpy #10
+    bcc !MissBestScore+
+    jsr BestScore
+!MissBestScore:
+    ldx #10
+    jsr RasterDelaySecs
+    jsr gfClearScreen
+    jmp GameLoop
 
 #import "utilities.asm"
 #import "gameFlow.asm"
